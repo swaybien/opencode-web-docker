@@ -1,0 +1,29 @@
+services:
+  opencode-web:
+    image: ${DOCKER_IMAGE:-ghcr.io/swaybien/opencode-web-docker:latest}
+    container_name: opencode-web
+
+    environment:
+      # 密钥 | OpenCode API Keys
+      OPENCODE_API_KEY: ${OPENCODE_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+
+      # 配置 | OpenCode Web Server Configuration
+      OPENCODE_SERVER_USERNAME: ${OPENCODE_SERVER_USERNAME:-}
+      OPENCODE_SERVER_PASSWORD: ${OPENCODE_SERVER_PASSWORD:-}
+      OPENCODE_SERVER_PORT: ${OPENCODE_SERVER_PORT:-}
+      OPENCODE_SERVER_HOSTNAME: ${OPENCODE_SERVER_HOSTNAME:-}
+      OPENCODE_SERVER_MDNS: ${OPENCODE_SERVER_MDNS:-false}
+      OPENCODE_SERVER_MDNS_DOMAIN: ${OPENCODE_SERVER_MDNS_DOMAIN:-}
+      OPENCODE_SERVER_CORS: ${OPENCODE_SERVER_CORS:-}
+
+    working_dir: /home/node
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "${OPENCODE_SERVER_HOST_PORT:-4096}:${OPENCODE_SERVER_PORT:-4096}"
+    volumes:
+      - ./data:/home/node

@@ -1,0 +1,10 @@
+AGENTS.md
+
+.env
+
+data/
+
+.DS_Store
+Thumbs.db
+
+*.log

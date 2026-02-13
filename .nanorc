@@ -1,0 +1,9 @@
+include /usr/share/nano/*.nanorc
+set autoindent # 自动缩进
+set mouse # 启用鼠标支持（滚动/选择）
+set linenumbers # 显示行号
+set tabsize 4 # Tab 宽度为 4 空格
+set tabstospaces # 将 Tab 转换为空格
+set softwrap # 自动换行（不切割单词）
+set constantshow # 底部状态栏常显
+set smarthome # Home 键跳转到行首非空字符
