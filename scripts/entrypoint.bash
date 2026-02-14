@@ -2,8 +2,8 @@
 set -e
 
 # 如果不存在 .chsrced 文件且 DISABLE_CHSRC 不为 true，执行 chsrc 设置 | If .chsrced file doesn't exist and DISABLE_CHSRC is not true, execute chsrc setup
-if [ ! -f "/home/node/.chsrced" ] && [ "$DISABLE_CHSRC" != "true" ] && [ "$DISABLE_CHSRC" != "1" ]; then
-    chsrc set cargo && chsrc set node && chsrc set debian && touch "/home/node/.chsrced"
+if [ ! -f "/root/.chsrced" ] && [ "$DISABLE_CHSRC" != "true" ] && [ "$DISABLE_CHSRC" != "1" ]; then
+    chsrc set rust && chsrc set node && touch "/root/.chsrced"
 fi
 
 # 构建启动参数 | Build arguments array for opencode web
@@ -39,10 +39,4 @@ fi
 
 echo "Starting OpenCode web server with arguments: ${args[@]}"
 
-# 修复挂载卷的权限（如果以 root 身份运行）| Fix permission of home if I am root
-if [ "$(id -u)" = "0" ]; then
-    chown -R node:node /home/node 2>/dev/null || true
-fi
-
-# 使用 gosu 以 node 用户身份运行 opencode web | Run opencode web as node
-exec gosu node opencode web "${args[@]}"
+exec /root/.opencode/bin/opencode web "${args[@]}"

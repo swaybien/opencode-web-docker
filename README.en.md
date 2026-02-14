@@ -69,7 +69,7 @@ For the complete variable list, see [.env.example](.env.example).
 
 ## Persistent Data
 
-The container mounts `/home/node` to the host's `./data` folder, preserving user data, configuration, and model cache.
+The container mounts `/root` to `opencode-web-data` volume, preserving user data, configuration, and model cache.
 
 ## CI/CD
 
@@ -78,7 +78,7 @@ The project includes a GitHub Actions workflow ([.github/workflows/docker.yml](.
 - Push to the `master` branch
 - Manual dispatch (supports custom tags and optional `latest` tag push)
 
-Images are pushed to `ghcr.io/<owner>/opencode-web-docker`.
+Images are pushed to `ghcr.io/swaybien/opencode-web-docker`.
 
 ### Manually Trigger Build
 
@@ -93,6 +93,6 @@ MIT License. See [LICENSE](LICENSE).
 ## Acknowledgements
 
 - [OpenCode](https://opencode.ai) – AI‑assisted development platform
-- [opencode-docker](https://github.com/utek/opencode-docker) - Tech support
+- [opencode-docker](https://github.com/utek/opencode-docker) - Reference and tech support
 - [chsrc](https://gitee.com/RubyMetric/chsrc) – Mirror source switcher
 - [x‑cmd](https://x-cmd.com) – Modern command‑line toolset

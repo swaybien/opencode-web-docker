@@ -46,22 +46,26 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
 RUN rm ./chsrc_latest-1_amd64.deb
 
 # 复制启动脚本 | Copy entrypoint
-COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY scripts/entrypoint.bash /usr/local/bin/entrypoint.bash
+RUN chmod +x /usr/local/bin/entrypoint.bash
 
 # 设置工作目录为 home | Set the working directory to home
-WORKDIR /home/node
+# WORKDIR /home/node
+WORKDIR /root
 
-# 将 opencode 添加到 PATH
-ENV PATH="/home/node/.cargo/bin:/home/node/.local/bin:/home/node/.opencode/bin:${PATH}"
+# VOLUME /home/node
+VOLUME /root
 
 # 切换到 node 用户 | Switch to the node user
-USER node
+# USER node
+
+# PATH
+ENV PATH="/root/.cargo/bin:/root/.local/bin:/root/.opencode/bin:${PATH}"
 
 # 安装 OpenCode | Install OpenCode from npm
-RUN mkdir -p /home/node/.local/share/opencode && chown -R node:node /home/node
+RUN mkdir -p /root/.local/share/opencode
 RUN curl -fsSL https://opencode.ai/install | bash
-RUN test -x /home/node/.opencode/bin/opencode && echo "OpenCode installed successfully" || (echo "OpenCode installation failed" && exit 1)
+RUN test -x /root/.opencode/bin/opencode && echo "OpenCode installed successfully" || (echo "OpenCode installation failed" && exit 1)
 
 # 安装 x-cmd | Install x-cmd
 RUN eval "$(curl https://get.x-cmd.com)"
@@ -73,7 +77,7 @@ RUN curl -sSf https://sh.rustup.rs --output rustup-init && \
     rustup component add rustfmt clippy
 
 # 复制 nano 配置 | Copy .nanorc
-COPY .nanorc /home/node/.nanorc
+COPY .nanorc /root/.nanorc
 
 # 使用 tini 作为 init 进程，运行 entrypoint.sh | User tini as ini to start entrypoint
-ENTRYPOINT ["tini", "--", "/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/usr/local/bin/entrypoint.bash"]

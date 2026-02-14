@@ -69,7 +69,7 @@ docker build -t opencode-web .
 
 ## 持久化数据
 
-容器将 `/home/node` 目录挂载到宿主机的 `./data` 文件夹，确保用户数据、配置和模型缓存得以保留。
+容器将 `/root` 目录挂载到 `opencode-web-data` 卷，确保用户数据、配置和模型缓存得以保留。
 
 ## CI/CD
 
@@ -78,7 +78,7 @@ docker build -t opencode-web .
 - 推送至 `master` 分支
 - 手动触发（支持自定义标签与是否推送 `latest` 标签）
 
-镜像将推送至 `ghcr.io/<owner>/opencode-web-docker`。
+镜像将推送至 `ghcr.io/swaybien/opencode-web-docker`。
 
 ### 手动触发构建
 
